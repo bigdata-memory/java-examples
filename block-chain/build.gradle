@@ -2,9 +2,33 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-        
+version = '1.0'
+sourceCompatibility = 11
+targetCompatibility = 11
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Created-By': 'bigdata-memory',
+                   'Main-Class': 'bm.demo.blockchain.BlockChainDemo'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+jar {
+    manifest {
+        attributes 'Created-By': 'bigdata-memory',
+                   'Main-Class': 'bm.demo.blockchain.BlockChainDemo'
+    }
+}
+
 repositories {
    mavenCentral()
 }

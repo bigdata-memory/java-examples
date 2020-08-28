@@ -83,7 +83,7 @@ public class AdvancedBlockChainTests {
         //2. modify data in block#2 in the ledger
         Block block2 = ledger.getBlockAt(2);
         Block tamperedBlock2 = new Block(block2.getId(), block2.getNonce(), "tampered data", block2.getPreviousHash(), block2.getHash());
-        List<Block> tamperedList = new ArrayList(ledger.getBlocks());
+        List<Block> tamperedList = new ArrayList<Block>(ledger.getBlocks());
         tamperedList.set(2, tamperedBlock2);
         Ledger tamperedLedger = new Ledger(ledger.getId(), ledger.getHashPrefix(), tamperedList);
 
